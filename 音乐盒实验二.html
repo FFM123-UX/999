@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24215220205范籽雯 - 记忆匣</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); }
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: white;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            padding: 10px 25px;
+            border: 2px solid rgba(255,255,255,0.5);
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+            font-family: inherit;
+        }
+
+        nav button:hover, nav button.active {
+            background: white;
+            color: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-caption {
+            padding: 20px;
+            text-align: center;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .photo-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .mv-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .mv-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .mv-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .mv-item video {
+            width: 100%;
+            height: 300px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .mv-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 30px 20px 20px;
+            font-size: 1.2em;
+        }
+
+        .music-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .player-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 25px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .album-art {
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            border: 4px solid rgba(255,255,255,0.3);
+            animation: rotate 20s linear infinite;
+            animation-play-state: paused;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .album-art.playing {
+            animation-play-state: running;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .song-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .song-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .song-artist {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            margin: 20px 0;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -5px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .control-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.1);
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            font-size: 1.8em;
+            background: white;
+            color: #764ba2;
+        }
+
+        .play-btn:hover {
+            background: #f0f0f0;
+            transform: scale(1.15);
+        }
+
+        .speed-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .speed-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-right: 5px;
+        }
+
+        .speed-btn {
+            padding: 6px 14px;
+            border: 2px solid rgba(255,255,255,0.4);
+            background: transparent;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .speed-btn:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.7);
+        }
+
+        .speed-btn.active {
+            background: white;
+            color: #764ba2;
+            border-color: white;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .volume-slider {
+            width: 100px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .playlist {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .playlist h3 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 10px;
+            border: 2px solid transparent;
+        }
+
+        .playlist-item:hover {
+            background: #f5f5f5;
+            transform: translateX(5px);
+        }
+
+        .playlist-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .playlist-number {
+            width: 35px;
+            height: 35px;
+            background: rgba(118, 75, 162, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .playlist-item.active .playlist-number {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .playlist-info {
+            flex: 1;
+        }
+
+        .playlist-title {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .playlist-duration {
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+
+        .playlist-item.active .playlist-duration {
+            opacity: 0.9;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: rgba(255,255,255,0.5);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-left-color: white;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-right-color: white;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: white;
+            border: 4px solid #764ba2;
+            border-radius: 50%;
+            top: 25px;
+            z-index: 10;
+        }
+
+        .timeline-date {
+            color: #764ba2;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .mv-container { grid-template-columns: 1fr; }
+            .timeline::before { left: 30px; }
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 70px;
+                padding-right: 0;
+            }
+            .timeline-dot { left: 30px; }
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: -15px;
+                right: auto;
+                border-right-color: white;
+                border-left-color: transparent;
+            }
+            .player-container { padding: 25px; }
+            .album-art { width: 150px; height: 150px; font-size: 60px; }
+            .speed-controls { flex-wrap: wrap; }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 3em;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .heart {
+            position: fixed;
+            color: rgba(255,255,255,0.3);
+            font-size: 24px;
+            pointer-events: none;
+            animation: floatHeart 10s infinite;
+            z-index: -1;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles"></div>
+    <audio id="audioPlayer" preload="metadata"></audio>
+
+    <header>
+        <h1>24215220205范籽雯</h1>
+        <p class="subtitle">时光记忆匣 · 珍藏每一个美好瞬间</p>
+    </header>
+
+    <nav>
+        <button class="active" onclick="showSection('gallery', this)">照片墙</button>
+        <button onclick="showSection('mv', this)">MV影集</button>
+        <button onclick="showSection('music', this)">音乐盒</button>
+        <button onclick="showSection('timeline', this)">时光轴</button>
+    </nav>
+
+    <div class="container">
+        <section id="gallery" class="section active">
+            <div class="gallery">
+                <div class="photo-card" onclick="openModal(this)">
+                    <img src="images/photo1.jpg" alt="回忆1" onerror="this.src='https://via.placeholder.com/400x400/667eea/ffffff?text=照片1'">
+                    <div class="photo-caption">
+                        <div>美好时光</div>
+                        <div class="photo-date">2024年春</div>
+                    </div>
+                </div>
+                <div class="photo-card" onclick="openModal(this)">
+                    <img src="images/photo2.jpg" alt="回忆2" onerror="this.src='https://via.placeholder.com/400x400/764ba2/ffffff?text=照片2'">
+                    <div class="photo-caption">
+                        <div>难忘瞬间</div>
+                        <div class="photo-date">2024年夏</div>
+                    </div>
+                </div>
+                <div class="photo-card" onclick="openModal(this)">
+                    <img src="images/photo3.jpg" alt="回忆3" onerror="this.src='https://via.placeholder.com/400x400/f093fb/ffffff?text=照片3'">
+                    <div class="photo-caption">
+                        <div>青春记忆</div>
+                        <div class="photo-date">2024年秋</div>
+                    </div>
+                </div>
+                <div class="photo-card" onclick="openModal(this)">
+                    <img src="images/photo4.jpg" alt="回忆4" onerror="this.src='https://via.placeholder.com/400x400/4facfe/ffffff?text=照片4'">
+                    <div class="photo-caption">
+                        <div>快乐时刻</div>
+                        <div class="photo-date">2024年冬</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mv" class="section">
+            <div class="mv-section">
+                <h2 style="text-align: center; color: #764ba2; margin-bottom: 10px;">MV 音乐影集</h2>
+                <p style="text-align: center; color: #666;">点击播放，重温那些动人的旋律与画面</p>
+                <div class="mv-container">
+                    <div class="mv-item">
+                        <video controls poster="images/mv1_cover.jpg" onerror="this.poster='https://via.placeholder.com/600x400/667eea/ffffff?text=MV封面1'">
+                            <source src="videos/mv1.mp4" type="video/mp4">
+                        </video>
+                        <div class="mv-title">青春纪念册 MV</div>
+                    </div>
+                    <div class="mv-item">
+                        <video controls poster="images/mv2_cover.jpg" onerror="this.poster='https://via.placeholder.com/600x400/764ba2/ffffff?text=MV封面2'">
+                            <source src="videos/mv2.mp4" type="video/mp4">
+                        </video>
+                        <div class="mv-title">时光倒流 MV</div>
+                    </div>
+                    <div class="mv-item">
+                        <video controls poster="images/mv3_cover.jpg" onerror="this.poster='https://via.placeholder.com/600x400/f093fb/ffffff?text=MV封面3'">
+                            <source src="videos/mv3.mp4" type="video/mp4">
+                        </video>
+                        <div class="mv-title">美好回忆 MV</div>
+                    </div>
+                    <div class="mv-item">
+                        <video controls poster="images/mv4_cover.jpg" onerror="this.poster='https://via.placeholder.com/600x400/4facfe/ffffff?text=MV封面4'">
+                            <source src="videos/mv4.mp4" type="video/mp4">
+                        </video>
+                        <div class="mv-title">梦想起航 MV</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="music" class="section">
+            <div class="music-section">
+                <div class="player-container">
+                    <div class="album-art" id="albumArt">🎵</div>
+                    <div class="song-info">
+                        <div class="song-title" id="songTitle">选择一首音乐</div>
+                        <div class="song-artist" id="songArtist">记忆匣音乐盒</div>
+                    </div>
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                    <div class="controls">
+                        <button class="control-btn" onclick="prevSong()" title="上一首">⏮</button>
+                        <button class="control-btn play-btn" id="playBtn" onclick="togglePlay()" title="播放/暂停">▶</button>
+                        <button class="control-btn" onclick="nextSong()" title="下一首">⏭</button>
+                    </div>
+                    <div class="speed-controls">
+                        <span class="speed-label">倍速</span>
+                        <button class="speed-btn" onclick="setPlaybackRate(0.5, this)">0.5x</button>
+                        <button class="speed-btn active" onclick="setPlaybackRate(1.0, this)">1.0x</button>
+                        <button class="speed-btn" onclick="setPlaybackRate(1.5, this)">1.5x</button>
+                        <button class="speed-btn" onclick="setPlaybackRate(2.0, this)">2.0x</button>
+                    </div>
+                    <div class="volume-container">
+                        <span>🔊</span>
+                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70" oninput="changeVolume(this.value)">
+                    </div>
+                </div>
+
+                <div class="playlist">
+                    <h3>🎼 播放列表</h3>
+                    <div id="playlistContainer">
+                        <div class="playlist-item" onclick="selectSong(0)">
+                            <div class="playlist-number">1</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">记忆旋律一</div>
+                                <div class="playlist-duration">music0.mp3</div>
+                            </div>
+                        </div>
+                        <div class="playlist-item" onclick="selectSong(1)">
+                            <div class="playlist-number">2</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">记忆旋律二</div>
+                                <div class="playlist-duration">music1.mp3</div>
+                            </div>
+                        </div>
+                        <div class="playlist-item" onclick="selectSong(2)">
+                            <div class="playlist-number">3</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">记忆旋律三</div>
+                                <div class="playlist-duration">music2.mp3</div>
+                            </div>
+                        </div>
+                        <div class="playlist-item" onclick="selectSong(3)">
+                            <div class="playlist-number">4</div>
+                            <div class="playlist-info">
+                                <div class="playlist-title">记忆旋律四</div>
+                                <div class="playlist-duration">music3.mp3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="section">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024年3月</div>
+                        <h3>初识</h3>
+                        <p>那个春天，一切美好的开始。阳光正好，微风不燥，我们在最好的时光相遇。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024年6月</div>
+                        <h3>成长</h3>
+                        <p>一起经历，一起学习，一起进步。每一个努力的日夜都成为了珍贵的回忆。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024年9月</div>
+                        <h3>收获</h3>
+                        <p>金秋时节，我们收获了知识，收获了友谊，更收获了成长的喜悦。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025年1月</div>
+                        <h3>展望</h3>
+                        <p>新的起点，新的征程。带着满满的回忆，我们继续前行，迎接更美好的明天。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" src="" alt="放大查看">
+    </div>
+
+    <footer>
+        <p> 24215220205范籽雯 | 记忆匣 | 用心珍藏每一份感动</p>
+    </footer>
+
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (8 + Math.random() * 6) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 15000);
+            }, 3000);
+        }
+
+        function showSection(sectionId, btn) {
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function openModal(element) {
+            const img = element.querySelector('img');
+            document.getElementById('modalImg').src = img.src;
+            document.getElementById('imageModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.getElementById('progressContainer');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const albumArt = document.getElementById('albumArt');
+        const songTitle = document.getElementById('songTitle');
+        const songArtist = document.getElementById('songArtist');
+        const playlistItems = document.querySelectorAll('.playlist-item');
+        const speedBtns = document.querySelectorAll('.speed-btn');
+
+        const songs = [
+            { src: 'music0.mp3', title: '记忆旋律一', artist: '珍藏曲目' },
+            { src: 'music1.mp3', title: '记忆旋律二', artist: '珍藏曲目' },
+            { src: 'music2.mp3', title: '记忆旋律三', artist: '珍藏曲目' },
+            { src: 'music3.mp3', title: '记忆旋律四', artist: '珍藏曲目' }
+        ];
+
+        let currentSongIndex = -1;
+        let isPlaying = false;
+        let currentRate = 1.0;
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function selectSong(index) {
+            currentSongIndex = index;
+            const song = songs[index];
+            audio.src = song.src;
+            audio.playbackRate = currentRate;
+            songTitle.textContent = song.title;
+            songArtist.textContent = song.artist;
+            playlistItems.forEach((item, i) => {
+                if (i === index) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+            audio.load();
+            audio.play();
+            isPlaying = true;
+            updatePlayButton();
+            albumArt.classList.add('playing');
+        }
+
+        function togglePlay() {
+            if (currentSongIndex === -1) {
+                selectSong(0);
+                return;
+            }
+            if (isPlaying) {
+                audio.pause();
+                albumArt.classList.remove('playing');
+            } else {
+                audio.play();
+                albumArt.classList.add('playing');
+            }
+            isPlaying = !isPlaying;
+            updatePlayButton();
+        }
+
+        function updatePlayButton() {
+            playBtn.innerHTML = isPlaying ? '⏸' : '▶';
+        }
+
+        function prevSong() {
+            let newIndex = currentSongIndex - 1;
+            if (newIndex < 0) newIndex = songs.length - 1;
+            selectSong(newIndex);
+        }
+
+        function nextSong() {
+            let newIndex = currentSongIndex + 1;
+            if (newIndex >= songs.length) newIndex = 0;
+            selectSong(newIndex);
+        }
+
+        function changeVolume(value) {
+            audio.volume = value / 100;
+        }
+
+        function setPlaybackRate(rate, btn) {
+            currentRate = rate;
+            audio.playbackRate = rate;
+            speedBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = pos * audio.duration;
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = progress + '%';
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener('ended', () => {
+            nextSong();
+        });
+
+        audio.volume = 0.7;
+        audio.playbackRate = 1.0;
+
+        window.onload = function() {
+            createParticles();
+            createHearts();
+        };
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
